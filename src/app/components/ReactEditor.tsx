@@ -45,7 +45,7 @@ import {
   Underline,
   Video,
 } from "reactjs-tiptap-editor/extension-bundle";
-import "reactjs-tiptap-editor/style.css";
+import "./richtext-editor.css";
 // import "katex/dist/katex.min.css";
 
 function convertBase64ToBlob(base64: string): Blob {

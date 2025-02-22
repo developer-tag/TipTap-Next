@@ -1,16 +1,31 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Configure fonts with more explicit options
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+  src: [
+    {
+      path: './fonts/GeistVF.woff',
+      style: 'normal',
+    }
+  ],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 });
+
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+  src: [
+    {
+      path: './fonts/GeistMonoVF.woff',
+      style: 'normal',
+    }
+  ],
+  display: 'swap',
+  preload: true,
+  fallback: ['monospace'],
 });
 
 export const metadata: Metadata = {
@@ -23,13 +38,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+  // Use try-catch to handle potential font loading issues
+  try {
+    return (
+      <html lang="en">
+        <body className={`font-sans antialiased ${geistSans?.className || ''} ${geistMono?.className || ''}`}>
+          {children}
+        </body>
+      </html>
+    );
+  } catch (error) {
+    console.error("Error loading font:", error);
+    // Fallback rendering if font loading fails
+    return (
+      <html lang="en">
+        <body className="font-sans antialiased">
+          {children}
+        </body>
+      </html>
+    );
+  }
 }

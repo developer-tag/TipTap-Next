@@ -1,7 +1,34 @@
+// next.config.mjs
 import withTM from 'next-transpile-modules';
 
 const nextConfig = {
-  // Add any additional Next.js config options here if needed.
+  transpilePackages: ['reactjs-tiptap-editor'],
+  webpack: (config) => {
+    // Add CSS handling
+    config.module.rules.push({
+      test: /\.css$/i,
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            postcssOptions: {
+              plugins: ['tailwindcss', 'autoprefixer'],
+            },
+          },
+        },
+      ],
+    });
+    
+    // Add font handling
+    config.module.rules.push({
+      test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      type: 'asset/resource',
+    });
+    
+    return config;
+  },
 };
 
-export default withTM(['react-tweet'])(nextConfig);
+export default withTM(['react-tweet', 'reactjs-tiptap-editor'])(nextConfig);
