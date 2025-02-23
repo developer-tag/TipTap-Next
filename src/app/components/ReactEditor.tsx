@@ -181,6 +181,14 @@ function ReactEditor() {
     [setContent]
   );
 
+  const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.target as HTMLButtonElement).style.backgroundColor = "#1f2937";
+  };
+
+  const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e.target as HTMLButtonElement).style.backgroundColor = "black";
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div
@@ -215,17 +223,13 @@ function ReactEditor() {
               color: "white",
               borderRadius: "0.75rem",
               transition: "background-color 0.2s",
-              cursor:'pointer'
+              cursor: 'pointer'
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#1f2937")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "black")}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label={
-              theme === "dark"
-                ? "Switch to light theme"
-                : "Switch to dark theme"
-              }
-              >
+            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+          >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
           <button
@@ -236,10 +240,10 @@ function ReactEditor() {
               color: "white",
               borderRadius: "0.75rem",
               transition: "background-color 0.2s",
-              cursor:'pointer'
+              cursor: 'pointer'
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#1f2937")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "black")}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
             onClick={() => setDisable(!disable)}
             aria-label={disable ? "Make editable" : "Make readonly"}
           >
